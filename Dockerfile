@@ -23,9 +23,6 @@ RUN go mod download && go build -o main .
 # Second stage of multi-stage build
 FROM alpine:latest
 
-# Set the port environment variable
-ENV PORT=3000
-
 # Get needed certificates
 RUN apk --no-cache add ca-certificates
 
