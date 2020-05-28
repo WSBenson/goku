@@ -23,16 +23,16 @@ type testResponse struct {
 
 func main() {
 
-	// Bind the viper key "prt" to the env variable "PORT" from the
+	// Bind the viper key "port" to the env variable "PORT" from the
 	// dockerfile then get the value from the "PORT" env variable
-	viper.BindEnv("prt", "PORT")
-	prt := viper.Get("prt")
+	viper.BindEnv("port", "PORT")
+	port := viper.Get("port")
 
 	// Convert "PORT" env variable to a string
-	str := fmt.Sprintf("%v", prt)
+	portStr := fmt.Sprintf("%v", port)
 
 	// concats the address with the port number from the env variable
-	address := "0.0.0.0:" + str
+	address := "0.0.0.0:" + portStr
 
 	// creates mux which is the router used for the http server
 	mux := http.NewServeMux()
