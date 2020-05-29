@@ -37,10 +37,13 @@ To Build this project follow these steps:
     ```bash
        docker build -t goku .
 
-       docker run -p 3000:3000 goku
+       docker run --env PORT=3000 -p 3000:3000 goku
+                            OR
+                docker run -p 3000:3000 goku
     ```
-- If port 3000 is occupied for you, change the PORT env variable in the Dockerfile
-- Then make sure to update the second command with your new port
+- By default, even if you leave out the --env PORT=3000 part of the command, the server will run on port 3000. So if port 3000 is occupied for you, change the PORT env variable in the second command, EX: --env PORT=4005
+- Also make sure to update the first port number in that second command with your new port. If you changed the port to 4005 it would become: 4005:3000
+- Don't actually use port 4005, it won't work. This was just used for a formatting example.
 
 - The http server should now be running, you can check by going to:
     `http://localhost:3000/test`   <- Change the port number to match yours
