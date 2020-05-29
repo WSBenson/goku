@@ -30,9 +30,7 @@ var cfgFile string
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "goku",
-	Short: "Ultra Instinct CLI",
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
+	Short: "Ultra Instinct CLI to avoid all errors",
 	//	Run: func(cmd *cobra.Command, args []string) { },
 }
 
@@ -53,9 +51,6 @@ func init() {
 	// will be global for your application.
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.goku.yaml)")
-
-	// Cobra also supports local flags, which will only run
-	// when this action is called directly.
 	// rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
