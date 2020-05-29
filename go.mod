@@ -1,4 +1,4 @@
-module github.com/wsbenson/goku
+module github.com/WSBenson/goku
 
 go 1.14
 
