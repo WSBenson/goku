@@ -16,8 +16,7 @@ limitations under the License.
 package cmd
 
 import (
-	"fmt"
-
+	"github.com/WSBenson/goku/internal/app"
 	"github.com/spf13/cobra"
 )
 
@@ -27,7 +26,7 @@ var appCmd = &cobra.Command{
 	Short: "Serve the Goku Application",
 
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("app called")
+		app.Serve()
 	},
 }
 
