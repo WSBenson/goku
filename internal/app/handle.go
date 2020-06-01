@@ -18,22 +18,22 @@ type allegiance struct {
 
 // gokuHandler accepts a post request that takes the user's name from the JSON request
 // and responds back with that user's name + some message
-func gokuHandler(w http.ResponseWriter, r *http.Request) {
+func handleGokuRequests(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodPost:
-		postHandler(w, r)
+		handleGokuPost(w, r)
 
 	case http.MethodGet:
-		getHandler(w, r)
+		handleGokuGet(w, r)
 
 	// all other cases
 	default:
-		defaultHandler(w, r)
+		handleGokuDefault(w, r)
 	}
 
 }
 
-func postHandler(w http.ResponseWriter, r *http.Request) {
+func handleGokuPost(w http.ResponseWriter, r *http.Request) {
 	// Reads the body of the JSON request into the fighter struct
 	// by unmarshaling the JSON bytes
 	f := fighter{}
@@ -58,7 +58,7 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(d)
 }
 
-func getHandler(w http.ResponseWriter, r *http.Request) {
+func handleGokuGet(w http.ResponseWriter, r *http.Request) {
 	// writes "The Z fighters are ready to fight"
 	a := allegiance{
 		Message: "The Z fighters are ready to battle",
@@ -72,7 +72,7 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(d)
 }
 
-func defaultHandler(w http.ResponseWriter, r *http.Request) {
+func handleGokuDefault(w http.ResponseWriter, r *http.Request) {
 	// writes "The Z fighters perished"
 	a := allegiance{
 		Message: "The Z fighters perished",

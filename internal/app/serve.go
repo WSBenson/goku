@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// runs goku as a web server using the port argument
+// Serve runs goku as a web server using the port argument
 func Serve(port string) {
 
 	// concats the address with the port number from the env variable
@@ -15,8 +15,8 @@ func Serve(port string) {
 	// creates mux which is the router used for the http server
 	mux := http.NewServeMux()
 
-	// sets the endpoint /goku to run the function gokuHandler
-	mux.HandleFunc("/goku", gokuHandler)
+	// sets the endpoint /goku to run the function handleGokuRequests
+	mux.HandleFunc("/goku", handleGokuRequests)
 
 	// set the fields of the http server, the Handler will point to
 	// the router
