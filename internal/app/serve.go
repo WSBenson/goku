@@ -27,7 +27,7 @@ func Serve(port string) {
 		WriteTimeout: 10 * time.Second,
 	}
 
-	fmt.Println("Goku is running on http://" + address + "/goku")
+	fmt.Println("Goku is running on http://" + address)
 
 	// start the http server, it will stop execution if an error is returned
 	panic(server.ListenAndServe())
