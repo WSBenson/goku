@@ -21,15 +21,13 @@ import (
 	"github.com/spf13/viper"
 )
 
-var port string
-
 // appCmd represents the app command
 var appCmd = &cobra.Command{
 	Use:   "app",
 	Short: "Serving untouchable, instinctive capabilities",
 
 	Run: func(cmd *cobra.Command, args []string) {
-		port = viper.GetString("port")
+		port := viper.GetString("port")
 		app.Serve(port)
 	},
 }

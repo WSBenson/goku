@@ -9,16 +9,6 @@ import (
 // runs goku as a web server using the port argument
 func Serve(port string) {
 
-	// Bind the viper key "port" to the env variable "PORT" from the
-	// dockerfile then get the value from the "PORT" env variable as
-	// as it is not nil.
-	//viper.BindEnv("port", "PORT")
-	//if viper.Get("port") != nil {
-	//port := viper.Get("port")
-	// Convert "PORT" env variable to a string
-	//portStr = fmt.Sprintf("%v", port)
-	//}
-
 	// concats the address with the port number from the env variable
 	address := "0.0.0.0:" + port
 
