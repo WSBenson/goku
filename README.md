@@ -4,7 +4,7 @@ This is my Goku http server written in go and containerized using docker.
 
 The purpose of this server is to take a JSON post request and return a response ranking each character by their power level.
 
-At the moment it will simply add "Hello, " + the name in the JSON body
+At the moment it will return a JSON message evaluating the power levels of the fighters that you specify.
 
 For Example:
 
@@ -12,18 +12,20 @@ The JSON file for the POST request should look something like this:
 
 ```json
 {
-	"name": "Goku"
+	"fighters": [
+			{
+				"name": "Goku",
+				"power": 150000000
+			}
+		]
 }
 ```
 
 Which will return a response of:
 
 ```json
-{
-    "Response": "Hello, Goku"
-}
+{"message":"The scouter says Goku's power level is over 9000! You better start running."}
 ```
-This will be changed in the future once the program is ready to rank characters by power levels.
 
 ## Gettting Started
 
