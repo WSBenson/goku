@@ -1,0 +1,9 @@
+version: '3'
+services:
+  goku:
+    image: wsbenson/goku:latest
+    build: .
+    ports:
+      - "3000:3000"
+    environment: 
+      - PORT=3000
