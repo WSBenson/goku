@@ -24,5 +24,8 @@ FROM alpine:latest
 # Copy files from the first stage into the current
 COPY --from=stageOne /go/bin/goku /bin/goku
 
+# Export default port
+EXPOSE 3000
+
 # Run to start the server
 CMD ["goku", "app"]
