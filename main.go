@@ -15,7 +15,9 @@ limitations under the License.
 */
 package main
 
-import "github.com/WSBenson/goku/cmd"
+import (
+	"github.com/WSBenson/goku/cmd"
+)
 
 func main() {
 	cmd.Execute()
