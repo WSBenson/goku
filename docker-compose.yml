@@ -10,12 +10,10 @@ services:
     depends_on: 
       - es
   es:
-    image: elasticsearch:7.7.1
+    image: elasticsearch:6.8.10
     ports:
       - "9200:9200"
     environment: 
       - node.name=es01
       - cluster.name=local
       - network.host=0.0.0.0
-      - discovery.seed_hosts=es01
-      - cluster.initial_master_nodes=es01

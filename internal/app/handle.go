@@ -1,14 +1,45 @@
 package app
 
 import (
+	"context"
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"time"
 
+	"github.com/olivere/elastic"
 	"github.com/rs/zerolog"
 )
+
+// This is the mapping I chose...
+// Defines which fields are stored and indexed within the elasticsearch fighters index.
+// Under mappings, the fighter line designates the type of the document.
+// Each section under properties are fields that the document depends on.
+// The keyword field for the name property will be great for searching, sorting and
+// grouping names.
+const mapping = `
+{
+	"settings":{
+		"number_of_shards": 1,
+		"number_of_replicas": 0
+	},
+	"mappings":{
+		"fighter":{
+			"properties":{
+				"name":{
+					"type":"keyword"
+				},
+				"power":{
+					"type":"integer"
+				},
+				"suggest_field":{
+					"type":"completion"
+				}
+			}
+		}
+	}
+}`
 
 var (
 	logger = zerolog.New(zerolog.ConsoleWriter{Out: os.Stdout, TimeFormat: time.RFC3339}).With().Timestamp().Caller().Logger()
@@ -81,6 +112,17 @@ func handleGokuPost(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	//ctx, client :=
+	// Calls the elasticClient function to create an elastic search client and
+	// add an index named fighters that will use the mapping variable to set
+	// the layout of its body.
+	elasticClient()
+
+	// Will be used later to add different fighters to the elastic search index
+	// for _, fighter := range f.Fighters {
+	// 	elasAddSearch(ctx, client, fighter)
+	// }
+
 	// The gokuPOSTCases function evaluates how many fighters are in the JSON POST body
 	// and returns a concatinated string with the name of the fighter(s) and other information
 	a.Message = gokuPOSTCases(f)
@@ -127,4 +169,42 @@ func handleGokuDefault(w http.ResponseWriter, r *http.Request) {
 	// Writes the JSON bytes to the JSON response writer
 	w.Write(d)
 	logger.Info().Msg("Message written\n")
+}
+
+// the elasticClient function creates an elastic search client and
+// adds an index named fighters that will use the mapping variable to set
+// the layout of its body if it doesn't already exist.
+func elasticClient() (context.Context, *elastic.Client) {
+	logger := zerolog.New(zerolog.ConsoleWriter{Out: os.Stdout, TimeFormat: time.RFC3339}).With().Caller().Timestamp().Logger()
+
+	// Passing a context to execute each service
+	ctx := context.Background()
+
+	// Obtain a client and connect to the default Elasticsearch installation
+	// on es:9200.
+	client, err := elastic.NewClient(elastic.SetURL("http://es:9200"))
+	if err != nil {
+		// Handle error
+		logger.Fatal().Err(err).Msg("failed to make new elastic search client")
+	}
+
+	// Use the IndexExists service to check if the specified fighter index exists before adding it.
+	exists, err := client.IndexExists("fighters").Do(ctx)
+	if err != nil {
+		// Handle error
+		logger.Error().Err(err).Msg("failed to check if fighters index exists")
+	}
+	// If that index doesn't already exist
+	if !exists {
+		// Create that fighters index using the mapping variable to specify the layout of the index.
+		createIndex, err := client.CreateIndex("fighters").BodyString(mapping).Do(ctx)
+		if err != nil {
+			// Handle error
+			logger.Fatal().Err(err).Msg("failed to create new elastic search index")
+		}
+		if !createIndex.Acknowledged {
+			// Not acknowledged
+		}
+	}
+	return ctx, client
 }
