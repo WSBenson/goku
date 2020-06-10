@@ -1,0 +1,21 @@
+{
+    "settings": {
+        "number_of_shards": 1,
+        "number_of_replicas": 0
+    },
+    "mappings": {
+        "fighter": {
+            "properties": {
+                "name": {
+                    "type": "keyword"
+                },
+                "power": {
+                    "type": "integer"
+                },
+                "suggest_field": {
+                    "type": "completion"
+                }
+            }
+        }
+    }
+}
