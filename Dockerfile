@@ -23,6 +23,7 @@ FROM alpine:latest
 
 # Copy files from the first stage into the current
 COPY --from=stageOne /go/bin/goku /bin/goku
+COPY --from=stageOne /src/mapping/mapping.json /etc/mapping.json
 
 # Export default port
 EXPOSE 3000

@@ -7,10 +7,13 @@ services:
       - "3000:3000"
     environment: 
       - PORT=3000
+      - ES_ADDRESS=http://es:9200
+      - ES_MAPPING_FILE=./etc/mapping.json
     depends_on: 
       - es
+
   es:
-    image: elasticsearch:7.7.1
+    image: elasticsearch:7.6.2
     ports:
       - "9200:9200"
     environment: 

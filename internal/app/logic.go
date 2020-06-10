@@ -1,5 +1,7 @@
 package app
 
+import "github.com/WSBenson/goku/internal"
+
 // The gokuPOSTCases function handles each case for the number of fighters passed
 // to the server through a JSON POST request
 func gokuPOSTCases(fs fighters) string {
@@ -15,7 +17,7 @@ func gokuPOSTCases(fs fighters) string {
 		return compareOverTwoPowers(fs)
 
 	default:
-		logger.Error().Msg("Improperly formated JSON message")
+		internal.Logger.Error().Msg("Improperly formated JSON message")
 		return "You did not format your JSON message properly, check the console log and the README."
 	}
 }
