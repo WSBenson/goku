@@ -4,6 +4,7 @@ import (
 	"context"
 	"io/ioutil"
 
+	"github.com/WSBenson/goku/internal"
 	"github.com/olivere/elastic"
 	"github.com/spf13/viper"
 )
@@ -22,11 +23,11 @@ import (
 // the ElasticClient function creates an elastic search client and
 // adds an index named fighters that will use the mapping variable to set
 // the layout of its body if it doesn't already exist.
-func ElasticClient(address string, ctx context.Context) *elastic.Client {
+func ElasticClient(ctx context.Context, address string) *elastic.Client {
 	// Reads from the mapping.json file to get the mapping variable
 	b, err := ioutil.ReadFile(viper.GetString("es_mapping_file"))
 	if err != nil {
-		logger.Fatal().Err(err).Msg("failed to retrieve es mapping")
+		internal.Logger.Fatal().Err(err).Msg("failed to retrieve es mapping")
 	}
 
 	// This is the mapping I chose...
@@ -42,14 +43,14 @@ func ElasticClient(address string, ctx context.Context) *elastic.Client {
 	client, err := elastic.NewClient(elastic.SetURL(address))
 	if err != nil {
 		// Handle error
-		logger.Fatal().Err(err).Msg("failed to make new elastic search client")
+		internal.Logger.Fatal().Err(err).Msg("failed to make new elastic search client")
 	}
 
 	// Use the IndexExists service to check if the specified fighter index exists before adding it.
 	exists, err := client.IndexExists("fighters").Do(ctx)
 	if err != nil {
 		// Handle error
-		logger.Error().Err(err).Msg("failed to check if fighters index exists")
+		internal.Logger.Error().Err(err).Msg("failed to check if fighters index exists")
 	}
 	// If that index doesn't already exist
 	if !exists {
@@ -57,7 +58,7 @@ func ElasticClient(address string, ctx context.Context) *elastic.Client {
 		createIndex, err := client.CreateIndex("fighters").BodyString(mapping).Do(ctx)
 		if err != nil {
 			// Handle error
-			logger.Fatal().Err(err).Msg("failed to create new elastic search index")
+			internal.Logger.Fatal().Err(err).Msg("failed to create new elastic search index")
 		}
 		if !createIndex.Acknowledged {
 			// Not acknowledged
