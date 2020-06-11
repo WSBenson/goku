@@ -9,12 +9,7 @@ import (
 )
 
 type fighters struct {
-	Fighters []fighter `json:"fighters"`
-}
-
-type fighter struct {
-	Name  string `json:"name"`
-	Power int    `json:"power"`
+	Fighters []Fighter `json:"fighters"`
 }
 
 // struct to hold the new concatination of the user's name

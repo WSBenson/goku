@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 
 	"github.com/WSBenson/goku/internal"
-	"github.com/olivere/elastic"
+	"github.com/olivere/elastic/v7"
 	"github.com/spf13/viper"
 )
 
@@ -20,10 +20,10 @@ import (
 // 	elasAddSearch(ctx, client, fighter)
 // }
 
-// the ElasticClient function creates an elastic search client and
+// ElasticClient ... creates an elastic search client and
 // adds an index named fighters that will use the mapping variable to set
 // the layout of its body if it doesn't already exist.
-func ElasticClient(ctx context.Context, address string) *elastic.Client {
+func ElasticClient(ctx context.Context, address string) {
 	// Reads from the mapping.json file to get the mapping variable
 	b, err := ioutil.ReadFile(viper.GetString("es_mapping_file"))
 	if err != nil {
@@ -61,8 +61,10 @@ func ElasticClient(ctx context.Context, address string) *elastic.Client {
 			internal.Logger.Fatal().Err(err).Msg("failed to create new elastic search index")
 		}
 		if !createIndex.Acknowledged {
+			internal.Logger.Error().Msg("elasticsearch failed to acknowledge index creation")
 			// Not acknowledged
 		}
+		internal.Logger.Info().Msg("successfully created elasticsearch index")
 	}
-	return client
+
 }
