@@ -16,7 +16,7 @@ var addfighterCmd = &cobra.Command{
 
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx := context.Background()
-		client, err := elastic.NewClient(elastic.SetURL(viper.GetString("es_address")))
+		client, err := elastic.NewSimpleClient(elastic.SetURL(viper.GetString("es_address")))
 		if err != nil {
 			// Handle error
 			internal.Logger.Fatal().Err(err).Msg("failed to make new elastic search client")
