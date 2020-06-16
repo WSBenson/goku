@@ -5,8 +5,7 @@ import (
 	"io/ioutil"
 
 	"github.com/WSBenson/goku/internal"
-	"github.com/olivere/elastic"
-	"github.com/spf13/viper"
+	"github.com/olivere/elastic/v7"
 )
 
 //client :=
@@ -20,12 +19,13 @@ import (
 // 	elasAddSearch(ctx, client, fighter)
 // }
 
-// the ElasticClient function creates an elastic search client and
+// ElasticClient ... creates an elastic search client and
 // adds an index named fighters that will use the mapping variable to set
 // the layout of its body if it doesn't already exist.
-func ElasticClient(ctx context.Context, address string) *elastic.Client {
+func ElasticClient(ctx context.Context, address, mappingPath string) {
+	internal.Logger.Debug().Msgf(address, mappingPath)
 	// Reads from the mapping.json file to get the mapping variable
-	b, err := ioutil.ReadFile(viper.GetString("es_mapping_file"))
+	b, err := ioutil.ReadFile(mappingPath)
 	if err != nil {
 		internal.Logger.Fatal().Err(err).Msg("failed to retrieve es mapping")
 	}
@@ -40,7 +40,7 @@ func ElasticClient(ctx context.Context, address string) *elastic.Client {
 
 	// Obtain a client and connect to the default Elasticsearch installation
 	// on localhost:9200.
-	client, err := elastic.NewClient(elastic.SetURL(address))
+	client, err := elastic.NewSimpleClient(elastic.SetURL(address))
 	if err != nil {
 		// Handle error
 		internal.Logger.Fatal().Err(err).Msg("failed to make new elastic search client")
@@ -55,14 +55,16 @@ func ElasticClient(ctx context.Context, address string) *elastic.Client {
 	// If that index doesn't already exist
 	if !exists {
 		// Create that fighters index using the mapping variable to specify the layout of the index.
-		createIndex, err := client.CreateIndex("fighters").BodyString(mapping).Do(ctx)
+		createIndex, err := client.CreateIndex("fighters").BodyJson(mapping).Do(ctx)
 		if err != nil {
 			// Handle error
 			internal.Logger.Fatal().Err(err).Msg("failed to create new elastic search index")
 		}
 		if !createIndex.Acknowledged {
+			internal.Logger.Error().Msg("elasticsearch failed to acknowledge index creation")
 			// Not acknowledged
 		}
+		internal.Logger.Info().Msg("successfully created elasticsearch index")
 	}
-	return client
+
 }
