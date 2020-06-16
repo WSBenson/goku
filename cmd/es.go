@@ -15,8 +15,8 @@ var elasticCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx := context.Background()
 
-		address := viper.GetString("es_address")
-		mapping := viper.GetString("es_mapping_file")
+		address := viper.GetString("addr")
+		mapping := viper.GetString("map")
 		es.ElasticClient(ctx, address, mapping)
 	},
 }
@@ -25,9 +25,9 @@ func init() {
 
 	rootCmd.AddCommand(elasticCmd)
 	// flag to
-	elasticCmd.Flags().StringP("es_address", "a", "http://localhost:9200", "url for Elasticsearch server")
-	elasticCmd.Flags().StringP("es_mapping_file", "m", "./mapping/mapping.json", "location for es mapping file")
+	elasticCmd.Flags().StringP("addr", "a", "http://localhost:9200", "address for Elasticsearch server")
+	elasticCmd.Flags().StringP("map", "m", "./mapping/mapping.json", "filepath to mapping.json for fighter index")
 	// binds the port key to the pflag with viper
-	viper.BindPFlag("es_address", elasticCmd.Flags().Lookup("es_address"))
-	viper.BindPFlag("es_mapping_file", elasticCmd.Flags().Lookup("es_mapping_file"))
+	viper.BindPFlag("addr", elasticCmd.Flags().Lookup("addr"))
+	viper.BindPFlag("map", elasticCmd.Flags().Lookup("map"))
 }

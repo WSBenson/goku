@@ -16,8 +16,8 @@ import (
 
 // AddF ...
 func AddF(ctx context.Context, client *elastic.Client) { //, fighter1 app.Fighter) {
-	name := viper.GetString("fighter_name")
-	power := viper.GetInt("fighter_power")
+	name := viper.GetString("name")
+	power := viper.GetInt("level")
 
 	f := app.Fighter{Name: name, Power: power}
 

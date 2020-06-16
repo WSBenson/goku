@@ -11,12 +11,12 @@ import (
 )
 
 var addfighterCmd = &cobra.Command{
-	Use:   "addfighter",
+	Use:   "addf",
 	Short: "Add your favorite Z fighters with one command",
 
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx := context.Background()
-		client, err := elastic.NewSimpleClient(elastic.SetURL(viper.GetString("es_address")))
+		client, err := elastic.NewSimpleClient(elastic.SetURL(viper.GetString("addr")))
 		if err != nil {
 			// Handle error
 			internal.Logger.Fatal().Err(err).Msg("failed to make new elastic search client")
@@ -31,9 +31,9 @@ func init() {
 
 	rootCmd.AddCommand(addfighterCmd)
 	// flag to
-	addfighterCmd.Flags().StringP("fighter_name", "n", "Goku", "name of fighter to add to elasticsearch")
-	addfighterCmd.Flags().IntP("fighter_power", "p", 9001, "power level associated with that fighter")
+	addfighterCmd.Flags().StringP("name", "n", "Goku", "name of fighter to add to elasticsearch")
+	addfighterCmd.Flags().IntP("level", "l", 9001, "power level associated with that fighter")
 	// binds the port key to the pflag with viper
-	viper.BindPFlag("fighter_name", addfighterCmd.Flags().Lookup("fighter_name"))
-	viper.BindPFlag("fighter_power", addfighterCmd.Flags().Lookup("fighter_power"))
+	viper.BindPFlag("name", addfighterCmd.Flags().Lookup("name"))
+	viper.BindPFlag("level", addfighterCmd.Flags().Lookup("level"))
 }
