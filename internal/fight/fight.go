@@ -1,10 +1,27 @@
-package app
+package fight
 
 import "github.com/WSBenson/goku/internal"
 
-// The gokuPOSTCases function handles each case for the number of fighters passed
-// to the server through a JSON POST request
-func gokuPOSTCases(fs fighters) string {
+// Fighter ... is a struct used by other internal packages to represent a dbz warrior
+type Fighter struct {
+	Name  string `json:"name"`
+	Power int    `json:"power"`
+}
+
+// Fighters ... is a struct used by other internal packages to hold a list of dbz warriors
+type Fighters struct {
+	Fighters []Fighter `json:"fighters"`
+}
+
+// NewFighter ... creates a new dbz warrior
+func NewFighter(name string, power int) Fighter {
+	f := Fighter{Name: name, Power: power}
+	return f
+}
+
+// MessageCases ... handles each case for the number of fighters passed
+// to the server through a JSON POST request or to elasticsearch with a command
+func MessageCases(fs Fighters) string {
 
 	switch length := len(fs.Fighters); {
 	case length == 1:
@@ -52,7 +69,7 @@ func compareTwoPowers(f Fighter, f1 Fighter) string {
 
 // The compareOverTwoPowers functions handles the case where more than two fighters are
 // passed to the server. It will return a string stating who has the highest power level.
-func compareOverTwoPowers(fs fighters) string {
+func compareOverTwoPowers(fs Fighters) string {
 	maxPower := 0
 	maxFighter := fs.Fighters[0]
 	// loops through each fighter to compare their powers

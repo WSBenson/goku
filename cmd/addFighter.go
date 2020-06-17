@@ -1,11 +1,8 @@
 package cmd
 
 import (
-	"context"
-
-	"github.com/WSBenson/goku/internal"
 	"github.com/WSBenson/goku/internal/es"
-	"github.com/olivere/elastic/v7"
+	"github.com/WSBenson/goku/internal/fight"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -15,15 +12,15 @@ var addfighterCmd = &cobra.Command{
 	Short: "Add your favorite Z fighters with one command",
 
 	Run: func(cmd *cobra.Command, args []string) {
-		ctx := context.Background()
-		client, err := elastic.NewSimpleClient(elastic.SetURL(viper.GetString("addr")))
-		if err != nil {
-			// Handle error
-			internal.Logger.Fatal().Err(err).Msg("failed to make new elastic search client")
-		}
+		client := es.NewClient(viper.GetString("addr"), "fighters", viper.GetString("map"))
+
+		f := fight.NewFighter(viper.GetString("name"), viper.GetInt("level"))
 
 		// calls AddF to add a fighter to the fighters index
-		es.AddF(ctx, client)
+		//es.CurrClient.AddFighter(f)
+		client.AddFighter(f)
+
+		client.QueryFighter(f)
 	},
 }
 

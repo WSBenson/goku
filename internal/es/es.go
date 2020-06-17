@@ -8,6 +8,7 @@ import (
 	"github.com/olivere/elastic/v7"
 )
 
+// Client ...
 type Client struct {
 	index string
 	ctx   *context.Context

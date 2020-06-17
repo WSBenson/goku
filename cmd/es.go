@@ -11,10 +11,7 @@ var elasticCmd = &cobra.Command{
 	Short: "Serving flexible search capabilities",
 
 	Run: func(cmd *cobra.Command, args []string) {
-
-		address := viper.GetString("addr")
-		mapping := viper.GetString("map")
-		es.ElasticClient(address, mapping)
+		es.NewClient(viper.GetString("addr"), "fighters", viper.GetString("map"))
 	},
 }
 

@@ -6,11 +6,8 @@ import (
 	"net/http"
 
 	"github.com/WSBenson/goku/internal"
+	"github.com/WSBenson/goku/internal/fight"
 )
-
-type fighters struct {
-	Fighters []Fighter `json:"fighters"`
-}
 
 // struct to hold the new concatination of the user's name
 type allegiance struct {
@@ -40,7 +37,7 @@ func handleGokuRequests(w http.ResponseWriter, r *http.Request) {
 func handleGokuPost(w http.ResponseWriter, r *http.Request) {
 	// Reads the body of the JSON request into the fighter struct
 	// by unmarshaling the JSON bytes
-	f := fighters{}
+	f := fight.Fighters{}
 	internal.Logger.Info().Msg("Reading POST request...")
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -72,7 +69,7 @@ func handleGokuPost(w http.ResponseWriter, r *http.Request) {
 
 	// The gokuPOSTCases function evaluates how many fighters are in the JSON POST body
 	// and returns a concatinated string with the name of the fighter(s) and other information
-	a.Message = gokuPOSTCases(f)
+	a.Message = fight.MessageCases(f)
 
 	// The response is marshaled back into JSON bytes to be sent to the browser
 	internal.Logger.Info().Msg("Marshaling POST message...")
