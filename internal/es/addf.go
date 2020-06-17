@@ -10,7 +10,7 @@ import (
 // err := c.AddFighter(f)
 func (c *Client) AddFighter(f fight.Fighter) (err error) {
 
-	internal.Logger.Error().Msg(c.index)
+	internal.Logger.Debug().Msg(c.index)
 	// Use the IndexExists service to check if the specified fighter index exists before adding it.
 	exists, err := c.IndexExists(c.index).Do(*c.ctx)
 	if err != nil {
@@ -31,7 +31,7 @@ func (c *Client) AddFighter(f fight.Fighter) (err error) {
 	// internal.Logger.Info().Msgf("Indexed fighter %s to index %s, type %s\n", put1.Id, put1.Index, put1.Type)
 
 	// Index a fighter (using JSON serialization)
-	_, err = c.Index().Index(c.index).Id("Battle").BodyJson(f).Do(*c.ctx)
+	_, err = c.Index().Index(c.index).Id(f.Name).BodyJson(f).Do(*c.ctx)
 	if err != nil {
 		internal.Logger.Fatal().Err(err).Msg("error indexing %+v fighter with %+v client")
 		return

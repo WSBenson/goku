@@ -20,7 +20,7 @@ var addfighterCmd = &cobra.Command{
 		//es.CurrClient.AddFighter(f)
 		client.AddFighter(f)
 
-		client.QueryFighter(f)
+		// client.QueryFighter(f)
 	},
 }
 

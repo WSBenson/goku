@@ -1,6 +1,8 @@
 package es
 
 import (
+	"context"
+	"encoding/json"
 	"fmt"
 	"reflect"
 
@@ -63,5 +65,26 @@ func (c *Client) QueryFighter(f fight.Fighter) (err error) {
 	}
 	// TotalHits is another convenience function that works even when something goes wrong.
 	internal.Logger.Info().Msgf("Found a total of %d fighters\n", searchResult.TotalHits())
+	return
+}
+
+func (c *Client) GetFighters() (fighters fight.Fighters, err error) {
+
+	// Do a search
+	results, err := c.Search().Index(c.index).Query(elastic.NewMatchAllQuery()).Do(context.Background())
+	if err != nil {
+		return
+	}
+
+	for _, hit := range results.Hits.Hits {
+
+		var f fight.Fighter
+		err = json.Unmarshal(hit.Source, &f)
+		if err != nil {
+			return
+		}
+		internal.Logger.Debug().Msgf("%+v", f)
+	}
+
 	return
 }

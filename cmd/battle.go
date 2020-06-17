@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"github.com/WSBenson/goku/internal/es"
-	"github.com/WSBenson/goku/internal/fight"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -13,10 +12,12 @@ var battleCmd = &cobra.Command{
 
 	Run: func(cmd *cobra.Command, args []string) {
 		client := es.NewClient(viper.GetString("addr"), "fighters", viper.GetString("map"))
-		f := fight.NewFighter(viper.GetString("name"), viper.GetInt("level"))
+		// f := fight.NewFighter(viper.GetString("name"), viper.GetInt("level"))
 
 		// calls QueryFighter() to query a fighter
-		client.QueryFighter(f)
+		// client.QueryFighter(f)
+
+		client.GetFighters()
 	},
 }
 
