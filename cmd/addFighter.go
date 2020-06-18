@@ -16,11 +16,8 @@ var addfighterCmd = &cobra.Command{
 
 		f := fight.NewFighter(viper.GetString("name"), viper.GetInt("level"))
 
-		// calls AddF to add a fighter to the fighters index
-		//es.CurrClient.AddFighter(f)
+		// calls AddFighter to add a fighter to the fighters index
 		client.AddFighter(f)
-
-		// client.QueryFighter(f)
 	},
 }
 

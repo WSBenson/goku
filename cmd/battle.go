@@ -12,19 +12,12 @@ var battleCmd = &cobra.Command{
 
 	Run: func(cmd *cobra.Command, args []string) {
 		client := es.NewClient(viper.GetString("addr"), "fighters", viper.GetString("map"))
-		// f := fight.NewFighter(viper.GetString("name"), viper.GetInt("level"))
 
-		// calls QueryFighter() to query a fighter
-		// client.QueryFighter(f)
-
+		// calls GetFighters() to query all added fighters
 		client.GetFighters()
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(battleCmd)
-
-	battleCmd.Flags().StringP("warrior", "f", "Goku", "name of fighter to find with elasticsearch query")
-	// binds the port key to the pflag with viper
-	viper.BindPFlag("warrior", battleCmd.Flags().Lookup("warrior"))
 }
