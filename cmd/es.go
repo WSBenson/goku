@@ -1,8 +1,6 @@
 package cmd
 
 import (
-	"context"
-
 	"github.com/WSBenson/goku/internal/es"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -13,11 +11,7 @@ var elasticCmd = &cobra.Command{
 	Short: "Serving flexible search capabilities",
 
 	Run: func(cmd *cobra.Command, args []string) {
-		ctx := context.Background()
-
-		address := viper.GetString("addr")
-		mapping := viper.GetString("map")
-		es.ElasticClient(ctx, address, mapping)
+		es.NewClient(viper.GetString("addr"), "fighters", viper.GetString("map"))
 	},
 }
 
