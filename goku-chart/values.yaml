@@ -1,0 +1,33 @@
+# Default values for goku-chart.
+# This is a YAML-formatted file.
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+# goku service account
+serviceAccount:
+  create: true
+  annotations: {}
+  name: "goku-service-account"
+
+# goku service configuration
+goku:
+  port: 3000
+  image: wsbenson/goku
+  tag: latest
+  pullPolicy: IfNotPresent
+  envvars:
+    # gm_control_api_insecure:
+    #   type: 'value'
+    #   value: "{{ .Values.control.secret.insecure }}"
+
+# k8s ingress controller for goku service
+ingress:
+  enabled: true
+  annotations: {}
+  hosts:
+    - host: localhost
+      paths: ["/"]
+  tls: []
+

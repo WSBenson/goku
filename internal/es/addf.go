@@ -23,12 +23,20 @@ func (c *Client) AddFighter(f fight.Fighter) (err error) {
 	}
 
 	// Index a fighter (using JSON serialization)
+	resp, err := c.Index().Index(c.index).Id(f.Name).BodyJson(f).Do(*c.ctx)
 	_, err = c.Index().Index(c.index).Id(f.Name).BodyJson(f).Do(*c.ctx)
 	if err != nil {
 		internal.Logger.Fatal().Err(err).Msg("error indexing %+v fighter with %+v client")
 		return
 	}
+	// indexResponse, err := client.Index().Index(v[vars.IndexName]).Type(v[vars.DocType]).BodyJson(content).Do(ctx)
+	// if err != nil {
+	// 	l.Error().Msg(err.Error())
+	// 	return "", err
+	// }
+	// l.Info().Msgf("See this indexed doc at: %s", elasticURL+"/"+v[vars.IndexName]+"/"+v[vars.DocType]+"/"+indexResponse.Id)
 
 	internal.Logger.Info().Msgf("indexed fighter: %+v\n", f)
+	internal.Logger.Info().Msgf("See this indexed doc at: %s", "http://localhost:9200/"+c.index+"/"+resp.Type+"/"+resp.Id)
 	return
 }
