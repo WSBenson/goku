@@ -20,6 +20,7 @@ type Client struct {
 // the layout of its body if it doesn't already exist.
 func NewClient(address, index, mappingPath string) *Client {
 	internal.Logger.Debug().Msgf("Address: %v  Mapping File Location: %v", address, mappingPath)
+	internal.Logger.Debug().Msgf(address, mappingPath)
 
 	// Reads from the mapping.json file to get the mapping variable
 	mappingData, err := ioutil.ReadFile(mappingPath)

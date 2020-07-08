@@ -24,6 +24,7 @@ func (c *Client) AddFighter(f fight.Fighter) (err error) {
 
 	// Index a fighter (using JSON serialization)
 	resp, err := c.Index().Index(c.index).Id(f.Name).BodyJson(f).Do(*c.ctx)
+	_, err = c.Index().Index(c.index).Id(f.Name).BodyJson(f).Do(*c.ctx)
 	if err != nil {
 		internal.Logger.Fatal().Err(err).Msg("error indexing %+v fighter with %+v client")
 		return
