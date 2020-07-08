@@ -19,7 +19,7 @@ type Client struct {
 // adds an index named fighters that will use the mapping variable to set
 // the layout of its body if it doesn't already exist.
 func NewClient(address, index, mappingPath string) *Client {
-	internal.Logger.Debug().Msgf(address, mappingPath)
+	internal.Logger.Debug().Msgf("Address: %v  Mapping File Location: %v", address, mappingPath)
 
 	// Reads from the mapping.json file to get the mapping variable
 	mappingData, err := ioutil.ReadFile(mappingPath)

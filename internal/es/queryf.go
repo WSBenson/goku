@@ -34,6 +34,7 @@ func (c *Client) GetFighters() (fightersStruct fight.Fighters, err error) {
 	}
 	// calls the MessageCases function from the fight package which handles
 	// what battle/fight message to display based off the struct you give it
+	internal.Logger.Info().Msgf("See the indexed fighters at: %s", "http://localhost:9200/"+c.index+"/"+"_search")
 	battleMessage := fight.MessageCases(fightersStruct)
 	internal.Logger.Info().Msgf("%+v", battleMessage)
 

@@ -3,6 +3,7 @@ package cmd
 import (
 	"github.com/WSBenson/goku/internal/es"
 	"github.com/WSBenson/goku/internal/fight"
+	"github.com/WSBenson/goku/internal/kafku"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -18,6 +19,7 @@ var addfighterCmd = &cobra.Command{
 
 		// calls AddFighter to add a fighter to the fighters index
 		client.AddFighter(f)
+		kafku.ProduceZ(viper.GetString("name") + " has been added to the squad!")
 	},
 }
 

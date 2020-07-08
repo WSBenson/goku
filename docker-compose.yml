@@ -9,6 +9,12 @@ services:
       - PORT=3000
       - ADDR=http://es:9200
       - MAP=/etc/mapping.json
+      # - KAFKA_ADDR=kafka:9092
+    volumes:
+      - ~/config.yml:/etc/goku/config.yml
+      #- ~/docWithACM.json:/etc/static/docWithACM.json
+      - ~/docWithoutACM.json:/etc/static/docWithoutACM.json
+      #- ~/fighters.json:/etc/static/fighters.json
     depends_on: 
       - es
 
@@ -22,3 +28,27 @@ services:
       - network.host=0.0.0.0
       - discovery.seed_hosts=es01
       - cluster.initial_master_nodes=es01
+
+  kafka:
+    image: wurstmeister/kafka:2.12-2.2.0
+    networks:
+      - default
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zk
+    environment:
+      - KAFKA_ADVERTISED_HOST_NAME=kafka
+      - KAFKA_LISTENERS=DOCKER_LISTENER://kafka:29092,LOCAL_LISTENER://kafka:9092
+      - KAFKA_ADVERTISED_LISTENERS=DOCKER_LISTENER://kafka:29092,LOCAL_LISTENER://localhost:9092
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=DOCKER_LISTENER:PLAINTEXT,LOCAL_LISTENER:PLAINTEXT
+      - KAFKA_INTER_BROKER_LISTENER_NAME=DOCKER_LISTENER
+      #- KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      - KAFKA_ADVERTISED_PORT=9092
+      - KAFKA_ZOOKEEPER_CONNECT=zk:2181
+      - KAFKA_CREATE_TOPICS=data-update:1:1,data-read:1:1,data-error:1:1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  zk:
+    image: wurstmeister/zookeeper:latest

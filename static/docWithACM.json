@@ -1,0 +1,84 @@
+{
+    "tstamp": "159aa60ddbe2c2fc",
+    "userpolicy": {
+        "label": "CN=localuser,OU=Engineering,O=Decipher Technology Studios,=Alexandria,=Virginia,C=US"
+    },
+    "jwthash": "7957a923eb6917d572d76a81a8318e9379fc6b782f2d959e32c8c6a09109677a",
+    "schemaversion": 7,
+    "name": "Grey Matter Data.pdf",
+    "action": "C",
+    "oid": "159aa60ddbb70748",
+    "parentoid": "159a9bd045ab0c8c",
+    "expiration": "7fffffffffffffff",
+    "checkedtstamp": "159a9bd045c6d5d4",
+    "objectpolicy": {
+        "label": "forAnonymousRead",
+        "requirements": {
+            "f": "yield-all"
+        }
+    },
+    "mimetype": "application/pdf",
+    "rname": {
+        "Any": "c9c/47/159aa60ddb847c9c",
+        "S3": "c9c/47/159aa60ddb847c9c"
+    },
+    "size": 320367,
+    "derived": {},
+    "isfile": true,
+    "security": {
+        "label": "DECIPHER//GMDATA",
+        "foreground": "#EEEEEE",
+        "background": "blue"
+    },
+    "sha256plain": "8f16a0de2de143abe0120987c58ed3e9af5c8a608fa2d1862352b3dacb7be602",
+    "encrypteddata": {
+        "master": "C0yY342M6tayeRU7fsANKYXuoyf5M6XbaM3w5VNDytIxgtNIoCt7xacknktgIro5mkTJypdtmjCWp15q/T94LRugaZDNtHlNEv40X1eAQQvNdwsblvycTZGN33YvcDtXF97XUbH7D3P3nMzw0+8DcbvVFvBf22qtvdg="
+    },
+    "encryptednonce": {
+        "master": "pEZbf0nbHYLBW8Dg"
+    },
+    "cluster": "default",
+    "id": "",
+    "originalobjectpolicy": {
+        "version": "2.1.0",
+        "classif": "U",
+        "owner_prod": [],
+        "atom_energy": [],
+        "sar_id": [],
+        "sci_ctrls": [],
+        "disponly_to": [
+            ""
+        ],
+        "dissem_ctrls": [],
+        "non_ic": [],
+        "rel_to": [],
+        "fgi_open": [],
+        "fgi_protect": [],
+        "portion": "U",
+        "banner": "UNCLASSIFIED",
+        "dissem_countries": [
+            "USA"
+        ],
+        "accms": [],
+        "macs": [],
+        "oc_attribs": [
+            {
+                "orgs": [],
+                "missions": [],
+                "regions": []
+            }
+        ],
+        "f_clearance": [
+            "u"
+        ],
+        "f_sci_ctrls": [],
+        "f_accms": [],
+        "f_oc_org": [],
+        "f_regions": [],
+        "f_missions": [],
+        "f_share": [],
+        "f_atom_energy": [],
+        "f_macs": [],
+        "disp_only": ""
+    }
+}
